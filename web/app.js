@@ -35,6 +35,7 @@ import { OverlayManager } from './overlay_manager';
 import { PasswordPrompt } from './password_prompt';
 import { PDFAttachmentViewer } from './pdf_attachment_viewer';
 import { PDFDocumentProperties } from './pdf_document_properties';
+import { PDFBrowseFiles } from './pdf_browse_files';
 import { PDFFindBar } from './pdf_find_bar';
 import { PDFFindController } from './pdf_find_controller';
 import { PDFHistory } from './pdf_history';
@@ -93,6 +94,8 @@ let PDFViewerApplication = {
   pdfPresentationMode: null,
   /** @type {PDFDocumentProperties} */
   pdfDocumentProperties: null,
+  /** @type {PDFBrowseFiles} */
+  pdfBrowseFiles: null,
   /** @type {PDFLinkService} */
   pdfLinkService: null,
   /** @type {PDFHistory} */
@@ -439,6 +442,10 @@ let PDFViewerApplication = {
 
       this.pdfDocumentProperties =
         new PDFDocumentProperties(appConfig.documentProperties,
+                                  this.overlayManager, eventBus, this.l10n);
+
+      this.pdfBrowseFiles =
+        new PDFBrowseFiles(appConfig.browseFiles,
                                   this.overlayManager, eventBus, this.l10n);
 
       this.pdfCursorTools = new PDFCursorTools({
@@ -1721,6 +1728,8 @@ if (typeof PDFJSDev === 'undefined' || PDFJSDev.test('GENERIC')) {
 
     if (file) {
       PDFViewerApplication.open(file);
+    } else {
+      PDFViewerApplication.eventBus.dispatch('openfile');
     }
   };
 } else if (PDFJSDev.test('FIREFOX || MOZCENTRAL || CHROME')) {
@@ -1968,10 +1977,7 @@ function webViewerPresentationMode() {
   PDFViewerApplication.requestPresentationMode();
 }
 function webViewerOpenFile() {
-  if (typeof PDFJSDev === 'undefined' || PDFJSDev.test('GENERIC')) {
-    let openFileInputName = PDFViewerApplication.appConfig.openFileInputName;
-    document.getElementById(openFileInputName).click();
-  }
+  PDFViewerApplication.pdfBrowseFiles.open();
 }
 function webViewerPrint() {
   window.print();

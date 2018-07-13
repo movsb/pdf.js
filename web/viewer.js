@@ -168,6 +168,11 @@ function getViewerConfiguration() {
         'pageSize': document.getElementById('pageSizeField'),
       },
     },
+    browseFiles: {
+        overlayName: 'browseFilesOverlay',
+        container: document.getElementById('browseFilesOverlay'),
+        closeButton: document.getElementById('browseFilesClose'),
+    },
     errorWrapper: {
       container: document.getElementById('errorWrapper'),
       errorMessage: document.getElementById('errorMessage'),
