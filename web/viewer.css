@@ -1450,6 +1450,52 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
   margin-top: 10px;
 }
 
+#browseFilesOverlay .dialog {
+  text-align: left;
+}
+#browseFilesOverlay .title {
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+}
+#browseFilesOverlay .wrapper {
+  height: 400px;
+  display: flex;
+}
+#browseFilesOverlay .folders {
+    padding-left: 1em;
+}
+#browseFilesOverlay .leftWrapper {
+  width: 200px;
+}
+#browseFilesOverlay .rightWrapper {
+  min-width: 350px;
+  max-width: 500px;
+}
+#browseFilesOverlay .file-wrap,
+#browseFilesOverlay .folder-wrap {
+  line-height: 1.5em;
+}
+#browseFilesOverlay .file:hover,
+#browseFilesOverlay .folder:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#browseFilesOverlay .wrapper a {
+    white-space: nowrap;
+}
+#browseFilesOverlay .buttonRow {
+  margin-top: 8px;
+}
+#browseFilesOverlay .leftWrapper,
+#browseFilesOverlay .rightWrapper {
+  overflow: auto;
+}
+#browseFilesOverlay .centerWrapper {
+  margin: 0 8px;
+  border: 1px solid #5c5c5c;
+}
+
 .clearBoth {
   clear: both;
 }
