@@ -41,7 +41,8 @@ class PDFBrowseFiles {
     this.readDir(this.leftContainer);
   }
   apiRoot() {
-    return 'http://127.0.0.1:8733/v1';
+    // return 'http://127.0.0.1:8733/v1';
+    return '/v1';
   }
   updateUI(element, base, files, folders) {
     var self = this;
