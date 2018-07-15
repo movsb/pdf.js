@@ -135,7 +135,16 @@ class Toolbar {
     });
 
     items.presentationModeButton.addEventListener('click', function() {
-      eventBus.dispatch('presentationmode', { source: self, });
+      // eventBus.dispatch('presentationmode', { source: self, });
+      var container = document.getElementById('outerContainer');
+      if(container.mozRequestFullScreen) {
+        if (document.mozFullScreenElement) {
+          document.mozCancelFullScreen();
+        } else {
+          container.mozRequestFullScreen();
+        }
+        return;
+      }
     });
 
     items.openFile.addEventListener('click', function() {
