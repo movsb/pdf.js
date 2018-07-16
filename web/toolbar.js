@@ -144,6 +144,7 @@ class Toolbar {
           document.mozCancelFullScreen();
         } else {
           container.mozRequestFullScreen();
+          container.style.backgroundColor = '#404040';
         }
         return;
       }
