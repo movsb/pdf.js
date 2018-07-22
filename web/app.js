@@ -34,8 +34,8 @@ import { getGlobalEventBus } from './dom_events';
 import { OverlayManager } from './overlay_manager';
 import { PasswordPrompt } from './password_prompt';
 import { PDFAttachmentViewer } from './pdf_attachment_viewer';
-import { PDFDocumentProperties } from './pdf_document_properties';
 import { PDFBrowseFiles } from './pdf_browse_files';
+import { PDFDocumentProperties } from './pdf_document_properties';
 import { PDFFindBar } from './pdf_find_bar';
 import { PDFFindController } from './pdf_find_controller';
 import { PDFHistory } from './pdf_history';
@@ -43,6 +43,7 @@ import { PDFLinkService } from './pdf_link_service';
 import { PDFOutlineViewer } from './pdf_outline_viewer';
 import { PDFPresentationMode } from './pdf_presentation_mode';
 import { PDFSidebarResizer } from './pdf_sidebar_resizer';
+import { PDFTaoBookmarksViewer } from './pdf_taobookmarks_viewer';
 import { PDFThumbnailViewer } from './pdf_thumbnail_viewer';
 import { PDFViewer } from './pdf_viewer';
 import { SecondaryToolbar } from './secondary_toolbar';
@@ -108,6 +109,8 @@ let PDFViewerApplication = {
   pdfOutlineViewer: null,
   /** @type {PDFAttachmentViewer} */
   pdfAttachmentViewer: null,
+  /** @type {PDFTaoBookmarksViewer} */
+  pdfTaoBookmarksViewer: null,
   /** @type {PDFCursorTools} */
   pdfCursorTools: null,
   /** @type {ViewHistory} */
@@ -446,7 +449,7 @@ let PDFViewerApplication = {
 
       this.pdfBrowseFiles =
         new PDFBrowseFiles(appConfig.browseFiles,
-                                  this.overlayManager, eventBus, this.l10n);
+                                  this.overlayManager, eventBus);
 
       this.pdfCursorTools = new PDFCursorTools({
         container,
@@ -483,6 +486,12 @@ let PDFViewerApplication = {
         container: appConfig.sidebar.attachmentsView,
         eventBus,
         downloadManager,
+      });
+
+      this.pdfTaoBookmarksViewer = new PDFTaoBookmarksViewer({
+          container: appConfig.sidebar.taoBookmarksView,
+          eventBus,
+          downloadManager,
       });
 
       // TODO: improve `PDFSidebar` constructor parameter passing
@@ -681,6 +690,7 @@ let PDFViewerApplication = {
     this.pdfSidebar.reset();
     this.pdfOutlineViewer.reset();
     this.pdfAttachmentViewer.reset();
+    this.pdfTaoBookmarksViewer.reset();
 
     this.findController.reset();
     this.findBar.reset();

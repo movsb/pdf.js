@@ -1,10 +1,11 @@
-import { PDFViewerApplication } from "./app";
+import { PDFViewerApplication } from './app';
 
 class PDFBrowseFiles {
   constructor({ overlayName, fields, container, closeButton, },
-              overlayManager, eventBus, l10n = NullL10n) {
+              overlayManager, eventBus) {
     this.overlayName = overlayName;
     this.container = container;
+    this.eventBus = eventBus;
     this.overlayManager = overlayManager;
     this.leftContainer = container.querySelector('.leftWrapper');
     this.rightContainer = container.querySelector('.rightWrapper');
@@ -45,7 +46,7 @@ class PDFBrowseFiles {
   }
 
   apiRoot() {
-    // return 'http://127.0.0.1:8733/v1';
+    return 'http://127.0.0.1:8733/v1';
     return '/v1';
   }
 
@@ -121,6 +122,9 @@ class PDFBrowseFiles {
     .then(function() {
       self.close();
       self.busy = false;
+      self.eventBus.dispatch('tao_fileloaded', {
+
+      });
     })
     .catch(function() {
       alert('Failed to open file.');

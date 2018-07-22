@@ -894,6 +894,10 @@ html[dir="rtl"] #viewOutline.toolbarButton::before {
   content: url(images/toolbarButton-viewAttachments.png);
 }
 
+#viewTaoBookmarks.toolbarButton::before {
+    content: url(images/toolbarButton-bookmark.png);
+}
+
 #viewFind.toolbarButton::before {
   content: url(images/toolbarButton-search.png);
 }

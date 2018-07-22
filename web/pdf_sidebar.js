@@ -23,6 +23,7 @@ const SidebarView = {
   THUMBS: 1,
   OUTLINE: 2,
   ATTACHMENTS: 3,
+  TAO_BOOKMARKS: 4,
 };
 
 /**
@@ -43,12 +44,16 @@ const SidebarView = {
  *   the outline view.
  * @property {HTMLButtonElement} attachmentsButton - The button used to show
  *   the attachments view.
+ * @property {HTMLButtonElement} taoBookmarksButton - The button used to show
+ *   the tao bookmarks view.
  * @property {HTMLDivElement} thumbnailView - The container in which
  *   the thumbnails are placed.
  * @property {HTMLDivElement} outlineView - The container in which
  *   the outline is placed.
  * @property {HTMLDivElement} attachmentsView - The container in which
  *   the attachments are placed.
+ * @property {HTMLDivElement} taoBookmarksView - The container in which
+ *   the tao bookmarks are placed.
  * @property {boolean} disableNotification - (optional) Disable the notification
  *   for documents containing outline/attachments. The default value is `false`.
  */
@@ -81,10 +86,12 @@ class PDFSidebar {
     this.thumbnailButton = options.thumbnailButton;
     this.outlineButton = options.outlineButton;
     this.attachmentsButton = options.attachmentsButton;
+    this.taoBookmarksButton = options.taoBookmarksButton;
 
     this.thumbnailView = options.thumbnailView;
     this.outlineView = options.outlineView;
     this.attachmentsView = options.attachmentsView;
+    this.taoBookmarksView = options.taoBookmarksView;
 
     this.disableNotification = options.disableNotification || false;
 
@@ -101,6 +108,7 @@ class PDFSidebar {
 
     this.outlineButton.disabled = false;
     this.attachmentsButton.disabled = false;
+    this.taoBookmarksButton.disabled = false;
   }
 
   /**
@@ -167,10 +175,12 @@ class PDFSidebar {
         this.thumbnailButton.classList.add('toggled');
         this.outlineButton.classList.remove('toggled');
         this.attachmentsButton.classList.remove('toggled');
+        this.taoBookmarksButton.classList.remove('toggled');
 
         this.thumbnailView.classList.remove('hidden');
         this.outlineView.classList.add('hidden');
         this.attachmentsView.classList.add('hidden');
+        this.taoBookmarksView.classList.add('hidden');
 
         if (this.isOpen && isViewChanged) {
           this._updateThumbnailViewer();
@@ -184,10 +194,12 @@ class PDFSidebar {
         this.thumbnailButton.classList.remove('toggled');
         this.outlineButton.classList.add('toggled');
         this.attachmentsButton.classList.remove('toggled');
+        this.taoBookmarksButton.classList.remove('toggled');
 
         this.thumbnailView.classList.add('hidden');
         this.outlineView.classList.remove('hidden');
         this.attachmentsView.classList.add('hidden');
+        this.taoBookmarksView.classList.add('hidden');
         break;
       case SidebarView.ATTACHMENTS:
         if (this.attachmentsButton.disabled) {
@@ -196,10 +208,26 @@ class PDFSidebar {
         this.thumbnailButton.classList.remove('toggled');
         this.outlineButton.classList.remove('toggled');
         this.attachmentsButton.classList.add('toggled');
+        this.taoBookmarksButton.classList.remove('toggled');
 
         this.thumbnailView.classList.add('hidden');
         this.outlineView.classList.add('hidden');
         this.attachmentsView.classList.remove('hidden');
+        this.taoBookmarksView.classList.add('hidden');
+        break;
+    case SidebarView.TAO_BOOKMARKS:
+        if (this.taoBookmarksButton.disabled) {
+          return;
+        }
+        this.thumbnailButton.classList.remove('toggled');
+        this.outlineButton.classList.remove('toggled');
+        this.attachmentsButton.classList.remove('toggled');
+        this.taoBookmarksButton.classList.add('toggled');
+
+        this.thumbnailView.classList.add('hidden');
+        this.outlineView.classList.add('hidden');
+        this.attachmentsView.classList.add('hidden');
+        this.taoBookmarksView.classList.remove('hidden');
         break;
       default:
         console.error('PDFSidebar_switchView: "' + view +
@@ -402,6 +430,10 @@ class PDFSidebar {
 
     this.attachmentsButton.addEventListener('click', () => {
       this.switchView(SidebarView.ATTACHMENTS);
+    });
+
+    this.taoBookmarksButton.addEventListener('click', () => {
+      this.switchView(SidebarView.TAO_BOOKMARKS);
     });
 
     // Disable/enable views.
