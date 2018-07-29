@@ -1,23 +1,15 @@
 import { PDFViewerApplication } from './app';
 
 class PDFBrowseFiles {
-  constructor({ overlayName, fields, container, closeButton, },
-              overlayManager, eventBus, l10n) {
-    this.overlayName = overlayName;
+  constructor({ manager, container, }) {
+    this.manager = manager;
     this.container = container;
-    this.overlayManager = overlayManager;
     this.leftContainer = container.querySelector('.leftWrapper');
     this.rightContainer = container.querySelector('.rightWrapper');
 
     this.busy = false;
 
     let self = this;
-
-    if (closeButton) {
-        closeButton.addEventListener('click', this.close.bind(this));
-    }
-    this.overlayManager.register(this.overlayName, this.container,
-                                 this.close.bind(this));
 
     this.container.querySelector('.wrapper').addEventListener('click', function(e) {
       if (self.busy) {
@@ -27,10 +19,8 @@ class PDFBrowseFiles {
       self.busy = true;
       self.onclick(e);
     });
-  }
 
-  close() {
-      this.overlayManager.close(this.overlayName);
+    this.load();
   }
 
   load() {
@@ -38,7 +28,9 @@ class PDFBrowseFiles {
   }
 
   apiRoot() {
-    // return 'http://127.0.0.1:8733/v1';
+    if (location.host.indexOf('8888') > 0) {
+      return 'http://127.0.0.1:8733/v1';
+    }
     return '/v1';
   }
 
@@ -112,10 +104,11 @@ class PDFBrowseFiles {
     let url = this.apiRoot() + '/file?file=' + encodeURIComponent(path);
     PDFViewerApplication.open(url)
     .then(function() {
-      self.close();
+      self.manager.close();
       self.busy = false;
     })
-    .catch(function() {
+    .catch(function(e) {
+      console.log(e);
       alert('Failed to open file.');
       self.busy = false;
     })
@@ -148,11 +141,18 @@ class PDFTaoManager {
     this.tabContainer.addEventListener('click', function(evt) {
       this.switchTab(evt.target);
     }.bind(this));
+
+    this.browseFiles = new PDFBrowseFiles({
+      manager: this,
+      container: this.container.querySelector('.page.browse-files'),
+    });
   }
 
   open() {
     this.overlayManager.open(this.overlayName);
-    this.switchTab(this.container.querySelector('.tabs .search'));
+    if (this.lastTab === null) {
+      this.switchTab(this.container.querySelector('.tabs .browse'));
+    }
   }
 
   close() {

@@ -1498,6 +1498,8 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
 #taoManagerOverlay .tabs ul {
     list-style: none;
     overflow: hidden;
+    margin-bottom: 4px;
+    cursor: pointer;
 }
 #taoManagerOverlay .tabs ul > li {
     float: left;
@@ -1507,7 +1509,6 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
     font-weight: bold;
     text-decoration: underline;
 }
-
 
 .clearBoth {
   clear: both;
