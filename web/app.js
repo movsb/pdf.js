@@ -35,7 +35,6 @@ import { OverlayManager } from './overlay_manager';
 import { PasswordPrompt } from './password_prompt';
 import { PDFAttachmentViewer } from './pdf_attachment_viewer';
 import { PDFDocumentProperties } from './pdf_document_properties';
-import { PDFBrowseFiles } from './pdf_browse_files';
 import { PDFFindBar } from './pdf_find_bar';
 import { PDFFindController } from './pdf_find_controller';
 import { PDFHistory } from './pdf_history';
@@ -43,6 +42,7 @@ import { PDFLinkService } from './pdf_link_service';
 import { PDFOutlineViewer } from './pdf_outline_viewer';
 import { PDFPresentationMode } from './pdf_presentation_mode';
 import { PDFSidebarResizer } from './pdf_sidebar_resizer';
+import { PDFTaoManager } from './pdf_browse_files';
 import { PDFThumbnailViewer } from './pdf_thumbnail_viewer';
 import { PDFViewer } from './pdf_viewer';
 import { SecondaryToolbar } from './secondary_toolbar';
@@ -102,8 +102,8 @@ let PDFViewerApplication = {
   pdfPresentationMode: null,
   /** @type {PDFDocumentProperties} */
   pdfDocumentProperties: null,
-  /** @type {PDFBrowseFiles} */
-  pdfBrowseFiles: null,
+  /** @type {PDFTaoManager} */
+  pdfTaoManager: null,
   /** @type {PDFLinkService} */
   pdfLinkService: null,
   /** @type {PDFHistory} */
@@ -369,8 +369,8 @@ let PDFViewerApplication = {
 
     this.toolbar = new Toolbar(appConfig.toolbar, eventBus, this.l10n);
 
-    this.pdfBrowseFiles =
-    new PDFBrowseFiles(appConfig.browseFiles,
+    this.pdfTaoManager =
+    new PDFTaoManager(appConfig.taoManager,
                                 this.overlayManager, eventBus, this.l10n);
 
     this.secondaryToolbar =
@@ -1916,7 +1916,7 @@ function webViewerPresentationMode() {
   PDFViewerApplication.requestPresentationMode();
 }
 function webViewerOpenFile() {
-  PDFViewerApplication.pdfBrowseFiles.open();
+  PDFViewerApplication.pdfTaoManager.open();
 }
 function webViewerPrint() {
   window.print();

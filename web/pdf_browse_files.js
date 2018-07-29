@@ -1,8 +1,8 @@
-import { PDFViewerApplication } from "./app";
+import { PDFViewerApplication } from './app';
 
 class PDFBrowseFiles {
   constructor({ overlayName, fields, container, closeButton, },
-              overlayManager, eventBus, l10n = NullL10n) {
+              overlayManager, eventBus, l10n) {
     this.overlayName = overlayName;
     this.container = container;
     this.overlayManager = overlayManager;
@@ -27,13 +27,6 @@ class PDFBrowseFiles {
       self.busy = true;
       self.onclick(e);
     });
-  }
-
-  open() {
-    this.overlayManager.open(this.overlayName);
-    if (this.leftContainer.childElementCount === 0) {
-      this.load();
-    }
   }
 
   close() {
@@ -130,6 +123,69 @@ class PDFBrowseFiles {
   }
 }
 
+class PDFTaoManager {
+  constructor({ overlayName, fields, container, },
+              overlayManager, eventBus, l10n) {
+    this.overlayName = overlayName;
+    this.container = container;
+    this.overlayManager = overlayManager;
+
+    let closeButton = this.container.querySelector('.closeButton');
+    closeButton.addEventListener('click', this.close.bind(this));
+    this.overlayManager.register(this.overlayName, this.container,
+                                 this.close.bind(this));
+
+    this.tabContainer = this.container.querySelector('.tabs');
+    this.pageContainer = this.container.querySelector('.pages');
+
+    this.lastTab = null;
+    this.lastPage = null;
+
+    this.pageSearchFiles = this.container.querySelector('.page.search-files');
+    this.pageBrowseFiles = this.container.querySelector('.page.browse-files');
+    this.pageUploadFiles = this.container.querySelector('.page.upload-files');
+
+    this.tabContainer.addEventListener('click', function(evt) {
+      this.switchTab(evt.target);
+    }.bind(this));
+  }
+
+  open() {
+    this.overlayManager.open(this.overlayName);
+    this.switchTab(this.container.querySelector('.tabs .search'));
+  }
+
+  close() {
+    this.overlayManager.close(this.overlayName);
+  }
+
+  switchTab(ele) {
+    if (this.lastTab !== null) {
+      this.lastTab.classList.remove('active');
+    }
+    if (this.lastPage !== null) {
+      this.lastPage.classList.add('hidden');
+    }
+
+    if (ele.classList.contains('search')) {
+      ele.classList.add('active');
+      this.pageSearchFiles.classList.remove('hidden');
+      this.lastTab = ele;
+      this.lastPage = this.pageSearchFiles;
+    } else if (ele.classList.contains('browse')) {
+      ele.classList.add('active');
+      this.pageBrowseFiles.classList.remove('hidden');
+      this.lastTab = ele;
+      this.lastPage = this.pageBrowseFiles;
+    } else if (ele.classList.contains('upload')) {
+      ele.classList.add('active');
+      this.pageUploadFiles.classList.remove('hidden');
+      this.lastTab = ele;
+      this.lastPage = this.pageUploadFiles;
+    }
+  }
+}
+
 export {
-    PDFBrowseFiles,
+    PDFTaoManager,
 };

@@ -169,10 +169,9 @@ function getViewerConfiguration() {
         'linearized': document.getElementById('linearizedField'),
       },
     },
-    browseFiles: {
-        overlayName: 'browseFilesOverlay',
-        container: document.getElementById('browseFilesOverlay'),
-        closeButton: document.getElementById('browseFilesClose'),
+    taoManager: {
+        overlayName: 'taoManagerOverlay',
+        container: document.getElementById('taoManagerOverlay'),
     },
     errorWrapper: {
       container: document.getElementById('errorWrapper'),

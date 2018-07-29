@@ -391,22 +391,43 @@ See https://github.com/adobe-type-tools/cmap-resources
             </div>
           </div>
         </div>
-        <div id="browseFilesOverlay" class="container hidden">
+        <div id="taoManagerOverlay" class="container hidden">
           <div class="dialog">
-            <div class="title">
-              Browse Files
-            </div>
-            <div class="wrapper">
-              <ul class="leftWrapper folders" data-path="/">
-
-              </ul>
-              <div class="centerWrapper"></div>
-              <ul class="rightWrapper files">
-
+            <!--TABS-->
+            <div class="tabs">
+              <ul>
+                <li class="tab search">搜索</li>
+                <li class="tab browse">浏览</li>
+                <li class="tab upload">上传</li>
               </ul>
             </div>
-            <div class="buttonRow">
-              <button id="browseFilesClose" class="overlayButton"><span data-l10n-id="browse_files_close">Close</span></button>
+            <!--PAGES-->
+            <div class="pages">
+              <!--Page SearchFiles-->
+              <div class="page search-files hidden">
+
+              </div>
+              <!--Page BrowseFiles-->
+              <div class="page browse-files hidden">
+                <div class="wrapper">
+                  <ul class="leftWrapper folders" data-path="/">
+
+                  </ul>
+                  <div class="centerWrapper"></div>
+                  <ul class="rightWrapper files">
+
+                  </ul>
+                </div>
+              </div>
+              <!--Page UploadFiles-->
+              <div class="page upload-files hidden">
+
+              </div>
+            </div>
+            <div class="footer">
+              <div class="buttonRow">
+                <button class="overlayButton closeButton">Close</button>
+              </div>
             </div>
           </div>
         </div>

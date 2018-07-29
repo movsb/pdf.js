@@ -1450,51 +1450,64 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
   margin-top: 10px;
 }
 
-#browseFilesOverlay .dialog {
+#taoManagerOverlay .dialog {
   text-align: left;
+  min-width: 400px;
+  min-height: 300px;
 }
-#browseFilesOverlay .title {
-  display: block;
-  text-align: center;
-  margin-bottom: 16px;
-}
-#browseFilesOverlay .wrapper {
-  height: 400px;
+#taoManagerOverlay .wrapper {
   display: flex;
 }
-#browseFilesOverlay .folders {
+#taoManagerOverlay .folders {
     padding-left: 1em;
 }
-#browseFilesOverlay .leftWrapper {
-  width: 200px;
+#taoManagerOverlay .leftWrapper {
+  flex: 1;
 }
-#browseFilesOverlay .rightWrapper {
-  min-width: 350px;
-  max-width: 500px;
+#taoManagerOverlay .rightWrapper {
+  flex: 2;
 }
-#browseFilesOverlay .file-wrap,
-#browseFilesOverlay .folder-wrap {
+#taoManagerOverlay .file-wrap,
+#taoManagerOverlay .folder-wrap {
   line-height: 1.5em;
 }
-#browseFilesOverlay .file:hover,
-#browseFilesOverlay .folder:hover {
+#taoManagerOverlay .file:hover,
+#taoManagerOverlay .folder:hover {
   text-decoration: underline;
   cursor: pointer;
 }
-#browseFilesOverlay .wrapper a {
+#taoManagerOverlay .wrapper a {
     white-space: nowrap;
 }
-#browseFilesOverlay .buttonRow {
+#taoManagerOverlay .buttonRow {
   margin-top: 8px;
 }
-#browseFilesOverlay .leftWrapper,
-#browseFilesOverlay .rightWrapper {
+#taoManagerOverlay .leftWrapper,
+#taoManagerOverlay .rightWrapper {
   overflow: auto;
 }
-#browseFilesOverlay .centerWrapper {
+#taoManagerOverlay .centerWrapper {
   margin: 0 8px;
   border: 1px solid #5c5c5c;
 }
+
+#taoManagerOverlay .tabs {
+    margin-bottom: 8px;
+    border-bottom: 1px dashed gray;
+}
+#taoManagerOverlay .tabs ul {
+    list-style: none;
+    overflow: hidden;
+}
+#taoManagerOverlay .tabs ul > li {
+    float: left;
+    padding: 4px;
+}
+#taoManagerOverlay .tabs ul > li.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 
 .clearBoth {
   clear: both;
