@@ -116,6 +116,30 @@ class PDFBrowseFiles {
   }
 }
 
+class PDFUploadFiles {
+  constructor({ manager, container, }) {
+    this.manager = manager;
+    this.container = container;
+
+    this.name = container.querySelector('.name');
+    this.file = container.querySelector('.file');
+    this.tags = container.querySelector('.tags');
+    this.isbn = container.querySelector('.isbn');
+    this.submit = container.querySelector('.submit');
+
+    this.name.addEventListener('dblclick', function() {
+      this.file.click();
+    }.bind(this));
+
+    this.file.addEventListener('change', function(e) {
+      if (e.target.files.length <= 0) {
+        return;
+      }
+      this.name.value = e.target.files[0].name.replace(/\.[^/.]+$/, '');
+    }.bind(this));
+  }
+}
+
 class PDFTaoManager {
   constructor({ overlayName, fields, container, },
               overlayManager, eventBus, l10n) {
@@ -145,6 +169,11 @@ class PDFTaoManager {
     this.browseFiles = new PDFBrowseFiles({
       manager: this,
       container: this.container.querySelector('.page.browse-files'),
+    });
+
+    this.uploadFiles = new PDFUploadFiles({
+        manager: this,
+        container: this.container.querySelector('.page.upload-files'),
     });
   }
 

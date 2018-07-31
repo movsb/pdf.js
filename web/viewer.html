@@ -421,7 +421,24 @@ See https://github.com/adobe-type-tools/cmap-resources
               </div>
               <!--Page UploadFiles-->
               <div class="page upload-files hidden">
-
+                <form class="form">
+                    <div>
+                        <label>文件：</label>
+                        <input type="text" class="name toolbarField" placeholder="双击选择文件..." accept=".pdf" />
+                        <input type="file" class="file hidden" />
+                    </div>
+                    <div>
+                        <label>标签：</label>
+                        <input type="text" class="tags toolbarField" />
+                    </div>
+                    <div>
+                        <label>ISBN：</label>
+                        <input type="text" class="isbn toolbarField" />
+                    </div>
+                    <div>
+                        <input type="submit" class="submit overlayButton" value="上传" />
+                    </div>
+                </form>
               </div>
             </div>
             <div class="footer">
