@@ -123,7 +123,6 @@ class PDFUploadFiles {
 
     this.name = container.querySelector('.name');
     this.file = container.querySelector('.file');
-    this.tags = container.querySelector('.tags');
     this.isbn = container.querySelector('.isbn');
     this.submit = container.querySelector('.submit');
 
@@ -152,8 +151,6 @@ class PDFUploadFiles {
         throw '名字不可以为空';
       } else if (!value('file')) {
         throw '请选择PDF文件';
-      // } else if (!value('tags')) {
-      //   throw '请输入标签';
       } else if (!value('isbn')) {
         throw '请选择ISBN编号';
       }
@@ -166,8 +163,14 @@ class PDFUploadFiles {
     let formData = new FormData(this.form);
     let xhr = new XMLHttpRequest();
     xhr.onload = function() {
-      alert('load');
-    };
+        console.log(this);
+        if (xhr.status === 200) {
+            alert('上传成功');
+            this.resetForm();
+        } else {
+            alert(xhr.responseText);
+        }
+    }.bind(this);
     xhr.onerror = function() {
       alert('error');
     };
@@ -178,6 +181,55 @@ class PDFUploadFiles {
     return false;
   }
 
+  resetForm() {
+      this.file.value = '';
+      this.name.value = '';
+      this.isbn.value = '';
+  }
+}
+
+class PDFSearchFiles {
+  constructor({ manager, container, }) {
+    this.manager = manager;
+    this.container = container;
+
+    this.form = this.container.querySelector('.form');
+    this.form.addEventListener('submit', this.onsubmit.bind(this));
+
+    // this.s = container.querySelector('.s');
+    this.results = this.container.querySelector('.results');
+  }
+
+  onsubmit(e) {
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        this.updateResults(JSON.parse(xhr.responseText));
+      } else {
+          alert(xhr.responseText);
+      }
+    }.bind(this);
+    xhr.onerror = function() {
+      alert('error');
+    };
+    let formData = new FormData(this.form);
+    let query = new URLSearchParams(formData).toString();
+    xhr.open('GET', this.manager.apiRoot() + '/search?' + query);
+    xhr.send();
+
+    e.preventDefault();
+    return false;
+  }
+
+  updateResults(books) {
+    this.results.innerText = '';
+    [].forEach.call(books, (book) => {
+      let li = document.createElement('li');
+      li.setAttribute('data-hash', book.hash);
+      li.innerText = book.name;
+      this.results.appendChild(li);
+    });
+  }
 }
 
 class PDFTaoManager {
@@ -214,6 +266,11 @@ class PDFTaoManager {
     this.uploadFiles = new PDFUploadFiles({
         manager: this,
         container: this.container.querySelector('.page.upload-files'),
+    });
+
+    this.searchFiles = new PDFSearchFiles({
+      manager: this,
+      container: this.container.querySelector('.page.search-files'),
     });
   }
 

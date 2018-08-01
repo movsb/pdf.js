@@ -1509,6 +1509,21 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
     font-weight: bold;
     text-decoration: underline;
 }
+#taoManagerOverlay .page.upload-files label {
+    width: 40px;
+    display: inline-block;
+}
+#taoManagerOverlay .page.search-files .results {
+    padding: 1em;
+    line-height: 1.5em;
+    max-height: 300px;
+    overflow: auto;
+}
+#taoManagerOverlay .page.search-files .results > li:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 
 .clearBoth {
   clear: both;

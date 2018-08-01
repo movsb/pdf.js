@@ -405,7 +405,17 @@ See https://github.com/adobe-type-tools/cmap-resources
             <div class="pages">
               <!--Page SearchFiles-->
               <div class="page search-files hidden">
+                <form class="form">
+                    <div>
+                        <input type="text" name="s" class="s toolbarField" placeholder="输入书名..." />
+                        <input type="submit" class="submit overlayButton" value="搜索" />
+                    </div>
+                    <div>
+                        <ul class="results">
 
+                        </ul>
+                    </div>
+                </form>
               </div>
               <!--Page BrowseFiles-->
               <div class="page browse-files hidden">
@@ -426,10 +436,6 @@ See https://github.com/adobe-type-tools/cmap-resources
                         <label>文件：</label>
                         <input type="text" name="name" class="name toolbarField" placeholder="双击选择文件..." accept=".pdf" />
                         <input type="file" name="file" class="file hidden" />
-                    </div>
-                    <div>
-                        <label>标签：</label>
-                        <input type="text" name="tags" class="tags toolbarField" />
                     </div>
                     <div>
                         <label>ISBN：</label>
