@@ -198,6 +198,7 @@ class PDFSearchFiles {
 
     // this.s = container.querySelector('.s');
     this.results = this.container.querySelector('.results');
+    this.results.addEventListener('click', this.onResultsClick.bind(this));
   }
 
   onsubmit(e) {
@@ -221,10 +222,20 @@ class PDFSearchFiles {
     return false;
   }
 
+  onResultsClick(evt) {
+    if (evt.target.classList.contains('book')) {
+        let hash = evt.target.getAttribute('data-hash');
+        this.manager.loadFile(hash, function() {
+
+        });
+    }
+  }
+
   updateResults(books) {
     this.results.innerText = '';
     [].forEach.call(books, (book) => {
       let li = document.createElement('li');
+      li.classList.add('book');
       li.setAttribute('data-hash', book.hash);
       li.innerText = book.name;
       this.results.appendChild(li);
@@ -316,6 +327,26 @@ class PDFTaoManager {
       return 'http://127.0.0.1:8733/v1';
     }
     return '/v1';
+  }
+
+  loadFile(hash, callback) {
+    let self = this;
+    let url = this.apiRoot() + '/download?hash=' + encodeURIComponent(hash);
+    PDFViewerApplication.open(url)
+    .then(function() {
+      self.close();
+      if (typeof callback === 'function') {
+          callback();
+      }
+    })
+    .catch(function(e) {
+      console.log(e);
+      alert('Failed to open file.');
+      if (typeof callback === 'function') {
+          callback();
+      }
+    })
+    ;
   }
 }
 
