@@ -287,8 +287,9 @@ class PDFTaoManager {
 
   open() {
     this.overlayManager.open(this.overlayName);
+    // set default tab
     if (this.lastTab === null) {
-      this.switchTab(this.container.querySelector('.tabs .browse'));
+      this.switchTab(this.container.querySelector('.tabs .search'));
     }
   }
 
