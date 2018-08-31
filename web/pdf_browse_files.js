@@ -137,7 +137,47 @@ class PDFUploadFiles {
       }
       this.name.value = e.target.files[0].name.replace(/\.[^/.]+$/, '');
     }.bind(this));
+
+    this.form = this.container.querySelector('.form');
+    this.form.addEventListener('submit', this.onsubmit.bind(this));
   }
+
+  onsubmit(e) {
+    let self = this;
+    function value(name) {
+      return self.form.elements[name].value;
+    }
+    try {
+      if (!value('name')) {
+        throw '名字不可以为空';
+      } else if (!value('file')) {
+        throw '请选择PDF文件';
+      // } else if (!value('tags')) {
+      //   throw '请输入标签';
+      } else if (!value('isbn')) {
+        throw '请选择ISBN编号';
+      }
+    } catch (x) {
+      alert(x);
+      e.preventDefault();
+      return false;
+    }
+
+    let formData = new FormData(this.form);
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      alert('load');
+    };
+    xhr.onerror = function() {
+      alert('error');
+    };
+    xhr.open('POST', this.manager.apiRoot() + '/upload');
+    xhr.send(formData);
+
+    e.preventDefault();
+    return false;
+  }
+
 }
 
 class PDFTaoManager {
@@ -212,6 +252,13 @@ class PDFTaoManager {
       this.lastTab = ele;
       this.lastPage = this.pageUploadFiles;
     }
+  }
+
+  apiRoot() {
+    if (location.host.indexOf('8888') > 0) {
+      return 'http://127.0.0.1:8733/v1';
+    }
+    return '/v1';
   }
 }
 
